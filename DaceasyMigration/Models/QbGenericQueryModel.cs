@@ -1,6 +1,6 @@
 ﻿namespace DaceasyMigration.Models
 {
-    public class VendorQueryModel
+    public class QbGenericQueryModel
     {
         public string ListId { get; set; }
         public string Name { get; set; }

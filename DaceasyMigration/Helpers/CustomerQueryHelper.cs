@@ -6,29 +6,37 @@ using QBFC13Lib;
 
 namespace DaceasyMigration.Helpers
 {
-    public class VendorsQueryHelper : BaseQbHelper
+    public class CustomerQueryHelper : BaseQbHelper
     {
-        private IList<QbGenericQueryModel>  list = new List<QbGenericQueryModel>();
-        public Task<IList<QbGenericQueryModel>> GetQbVendorsAsync()
+        public CustomerQueryHelper()
         {
-           return  Task.Run(() =>
-            {
-                Initialize();
-
-                BuildQuery();
-
-                ResponseMsgSet = SessionManager.DoRequests(RequestMsgSet);
-
-                CleanUp();
-
-               // LogRequestAndResponse();
-                ExtractVendorList();
-                return list;
-            });
-
+            List = new List<QbGenericQueryModel>();
         }
 
-        private void ExtractVendorList()
+        public Task<IList<QbGenericQueryModel>> GetCustomersAsync()
+        {
+            return Task.Run(() => GetCustomers());
+        }
+        public IList<QbGenericQueryModel> GetCustomers()
+        {
+            Initialize();
+
+            BuildQuery();
+
+            ResponseMsgSet = SessionManager.DoRequests(RequestMsgSet);
+
+            CleanUp();
+            ExtractCustomerList();
+            return List;
+        }
+
+       
+
+        private void BuildQuery()
+        {
+            RequestMsgSet.AppendCustomerQueryRq();
+        } 
+        private void ExtractCustomerList()
         {
             if (ResponseMsgSet == null) return;
 
@@ -47,10 +55,10 @@ namespace DaceasyMigration.Helpers
                     {
                         //make sure the response is the type we're expecting
                         ENResponseType responseType = (ENResponseType)response.Type.GetValue();
-                        if (responseType == ENResponseType.rtVendorQueryRs)
+                        if (responseType == ENResponseType.rtCustomerQueryRs)
                         {
                             //upcast to more specific type here, this is safe because we checked with response.Type check above
-                            var retList = (IVendorRetList)response.Detail;
+                            var retList = (ICustomerRetList)response.Detail;
                             for (int j = 0; j < retList.Count; j++)
                             {
                                 WalkRet(retList.GetAt(j));
@@ -61,26 +69,21 @@ namespace DaceasyMigration.Helpers
             }
         }
 
-        private void WalkRet(IVendorRet vendorRet)
+        private void WalkRet(ICustomerRet customerRet)
         {
-            if (vendorRet == null)
+            if (customerRet == null)
             {
                 return;
             }
-            
+
             var model = new QbGenericQueryModel
             {
-                ListId = vendorRet.ListID.GetValue(), 
-                Name = vendorRet.Name.GetValue()
+                ListId = customerRet.ListID.GetValue(),
+                Name = customerRet.Name.GetValue()
             };
-            list.Add(model);
+            List.Add(model);
         }
 
-        private void BuildQuery()
-        {
-            RequestMsgSet.AppendVendorQueryRq();
-        }
-
-
+        public IList<QbGenericQueryModel> List { get; set; }
     }
 }

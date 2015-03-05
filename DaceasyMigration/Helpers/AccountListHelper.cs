@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using QBFC13Lib;
 
 namespace DaceasyMigration.Helpers
@@ -7,6 +8,11 @@ namespace DaceasyMigration.Helpers
     public class AccountListHelper : BaseQbHelper
     {
         public IList<AccountDetail> AccountDetails = new List<AccountDetail>();
+
+        public Task<IList<AccountDetail>> GetListAsync()
+        {
+            return Task.Run(() => GetList());
+        }
         public IList<AccountDetail> GetList()
         {
             Initialize();

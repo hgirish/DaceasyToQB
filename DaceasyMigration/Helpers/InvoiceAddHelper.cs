@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DaceasyMigration.Models;
+﻿using DaceasyMigration.Models;
 using QBFC13Lib;
 
 namespace DaceasyMigration.Helpers
@@ -7,16 +6,9 @@ namespace DaceasyMigration.Helpers
     public class InvoiceAddHelper : BaseQbHelper
     {
        
-        //public IList<string> AccountList { get; set; }
-      //  public IList<string> ItemList { get; set; } 
-     //   public int TotalItems { get; set; }
 
         public void DoInvoiceAdd(InvoiceAddModel invoiceAddModel)
         {
-            //var itemHelper = new ItemHelper();
-            //ItemList = itemHelper.GetList();
-            //TotalItems = ItemList.Count;
-            //Log.Info("TotalItems: {0}", TotalItems);
             Initialize();
 
             BuildQuery();
@@ -25,7 +17,7 @@ namespace DaceasyMigration.Helpers
 
             CleanUp();
 
-            LogRequestAndResponse();
+            //LogRequestAndResponse();
         }
 
         
