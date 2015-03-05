@@ -25,7 +25,8 @@ namespace DaceasyMigration
         readonly  AccountAddHelper _accountAddHelper = new AccountAddHelper();
         private readonly VendorAddHelper _vendorAddHelper = new VendorAddHelper();
         private readonly VendorsQueryHelper _vendorsQueryHelper = new VendorsQueryHelper();
-
+        private DaceasyHelper _daceasyHelper = new DaceasyHelper();
+        private readonly SalesRepAddHelper _salesRepAddHelper = new SalesRepAddHelper();
         public MainWindow()
         {
             InitializeComponent();
@@ -373,6 +374,46 @@ namespace DaceasyMigration
                 var vendores = conneciton.Query<DaceasyVendor>("Select * from Vendors");
                 return vendores.ToList();
             }
+        }
+
+        private  async void AddSalesRepButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AddSalesRepButton.IsEnabled = false;
+            var daceasySalesReps = await _daceasyHelper.GetSalesRepsAync();
+            NotifyUi(string.Format("Daceasy Sales Reps: {0}", daceasySalesReps.Count));
+            await AddSalesRepsToQb(daceasySalesReps);
+            MessageBox.Show("Add Sales Rep completed");
+        }
+
+        private async Task AddSalesRepsToQb(IEnumerable<string> daceasySalesReps)
+        {
+            int index = 0;
+            foreach (var rep in daceasySalesReps)
+            {
+                index++;
+                await AddSalesRepToQb(rep);
+                NotifyUi(string.Format("Sales Rep {0}: {1}",index, rep));
+            }
+        }
+
+        private Task AddSalesRepToQb(string rep)
+        {
+            return Task.Run(() =>
+            {
+                SalesRepAddModel model = new SalesRepAddModel
+                {
+                    Initial = rep,
+                    FullName = rep,
+                    IsActive = true
+                };
+                _salesRepAddHelper.DoAdd(model);
+            });
+        }
+
+        private void NotifyUi(string message)
+        {
+            ResultBox.Items.Add(message);
+            ScrollToBottom();
         }
     }
 }

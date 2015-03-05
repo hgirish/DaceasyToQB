@@ -70,6 +70,9 @@
     </Page>
     <Compile Include="Helpers\AccountAddHelper.cs" />
     <Compile Include="Helpers\AccountListHelper.cs" />
+    <Compile Include="Helpers\DaceasyHelper.cs" />
+    <Compile Include="Helpers\InvoiceAddHelper.cs" />
+    <Compile Include="Helpers\SalesRepAddHelper.cs" />
     <Compile Include="Helpers\VendorsQueryHelper.cs" />
     <Compile Include="Models\DaceasyVendor.cs" />
     <Compile Include="Helpers\TermsHelper.cs" />
@@ -92,6 +95,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\InvoiceAddModel.cs" />
+    <Compile Include="Models\SalesRepAddModel.cs" />
     <Compile Include="Models\VendorQueryModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

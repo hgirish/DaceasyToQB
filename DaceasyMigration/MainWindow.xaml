@@ -20,7 +20,7 @@
             <Button x:Name="AddCustomerButton" Click="AddCustomerButton_OnClick">Add Customer</Button>
             <Button x:Name="AddAccountsButton" Click="AddAccountsButton_OnClick">Add Accounts</Button>
             <Button x:Name="AddVendores" Click="AddVendores_OnClick">Add Vendors</Button>
-
+<Button x:Name="AddSalesRepButton" Click="AddSalesRepButton_OnClick">Add Sales Rep</Button>
             <ListBox x:Name="ResultBox" Width="450" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Button x:Name="CloseApplicationButton" Click="CloseApplicationButtonClick" Width="200" Height="30" FontSize="16" Margin="10" Content="Exit" />
 
